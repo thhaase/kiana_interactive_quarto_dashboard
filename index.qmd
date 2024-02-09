@@ -50,7 +50,7 @@ tibble(response = data$An.was.denken.Sie..wenn.Sie.den.Begriff.Nachhaltigkeit.h�
           marker = list(color = ~-Frequency, 
                         colorscale = 'Greens')) %>%
   layout(title = '',
-         xaxis = list(title = 'Themen', 
+         xaxis = list(title = '', 
                       tickangle = -45),
          yaxis = list(title = 'Antworthäufigkeit'))
 ```
@@ -66,7 +66,7 @@ plot_ly(x = ~rating, y = ~Frequency, type = 'bar', name = 'Importance Ratings',
           marker = list(color = ~-Frequency, 
                         colorscale = 'Greens')) %>%
   layout(title = '',
-         xaxis = list(title = 'Bewertung',
+         xaxis = list(title = '',
                       tickvals = ~rating,
                       ticktext = c('1 \n Äußerst wichtig', '2', '3', '4 \n Überhaupt nicht wichtig'),
                       tickangle = -45),
