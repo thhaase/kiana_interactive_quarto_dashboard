@@ -39,7 +39,7 @@ cat("Hier kommen Filter hin")
 ### Column {.tabset width=70%}
 
 ::: {.card title="Themen"}
-An was denken Sie, wenn Sie den Begriff Nachhaltigkeit hören?
+An was denken Sie, wenn Sie den Begriff Nachhaltigkeit hören? 
 ```{r, echo=FALSE, message=FALSE, warning=FALSE}
 tibble(response = data$An.was.denken.Sie..wenn.Sie.den.Begriff.Nachhaltigkeit.hören..) %>%
   mutate(themes = str_split(response, ";")) %>% 
@@ -57,7 +57,7 @@ tibble(response = data$An.was.denken.Sie..wenn.Sie.den.Begriff.Nachhaltigkeit.h�
 :::
 
 ::: {.card title="Wohnraum"}
-Ist es für Sie wichtig Ihren Wohnraum und Ihre Einrichtung nachhaltig zu gestalten?
+Ist es für Sie wichtig Ihren Wohnraum und ihre Einrichtung nachhaltig zu gestalten?
 ```{r, echo=FALSE, message=FALSE, warning=FALSE}
 tibble(rating = data$Ist.es.für.Sie.wichtig.Ihren.Wohnraum.und.ihre.Einrichtung.nachhaltig.zu.gestalten.) %>%
   count(rating, name = "Frequency") %>%
@@ -93,6 +93,65 @@ tibble(response = data$Ist.Ihnen.der.Begriff.Upcycling.im.Bereich.Wohnen.bekannt
 
 ```
 :::
+
+::: {.card title="Upcycling"}
+Haben Sie in der Vergangenheit alte oder nutzlos gewordene Möbel, sowie Gegenstände selber aufgewertet, um ihre Lebensdauer zu verlängern?
+```{r, echo=FALSE, message=FALSE, warning=FALSE}
+tibble(response = data$Haben.Sie.in.der.Vergangenheit.alte.oder.nutzlos.gewordene.Möbel..sowie.Gegenstände.selber.aufgewertet..um.ihre.Lebensdauer.zu.verlängern.) %>%
+  count(response, name = "Frequency") %>%
+  mutate(response = factor(response, levels = response[order(-Frequency)])) %>%
+  plot_ly(x = ~response, y = ~Frequency, type = 'bar', name = 'Upcycling Behavior',
+          marker = list(color = ~-Frequency, 
+                        colorscale = 'Viridis')) %>%
+  layout(title = '',
+         xaxis = list(title = '',
+                      tickangle = -45),
+         yaxis = list(title = 'Antworthäufigkeit'))
+```
+:::
+
+::: {.card title="Workshop"}
+Hätten Sie Interesse, an einem Upcycling-Workshop teilzunehmen?
+```{r, echo=FALSE, message=FALSE, warning=FALSE}
+tibble(response = data$Hätten.Sie.Interesse..an.einem.Upcycling.Workshop.teilzunehmen.) %>%
+  filter(response %in% c("Ja", "Nein")) %>% 
+  count(response, name = "Frequency") %>%
+  mutate(response = factor(response, levels = response[order(-Frequency)])) %>%
+  plot_ly(x = ~response, y = ~Frequency, type = 'bar', name = 'Workshop Interest',
+          marker = list(color = ~-Frequency, 
+                        colorscale = 'Viridis')) %>%
+  layout(title = '',
+         xaxis = list(title = '',
+                      tickangle = -45),
+         yaxis = list(title = 'Antworthäufigkeit'))
+
+```
+:::
+
+
+::: {.card title="Infos"}
+Wie haben Sie bisher Informationen darüber erhalten, wie man nachhaltig "Wohnen" kann?
+```{r, echo=FALSE, message=FALSE, warning=FALSE}
+tibble(response = data$Wie.haben.Sie.bisher.Informationen.darüber.erhalten..wie.man.nachhaltig..Wohnen..kann.) %>%
+  mutate(themes = str_split(response, ";")) %>% 
+  unnest(themes) %>% 
+  count(themes, name = "Frequency") %>%
+    mutate(themes = recode(themes, "Ich habe bislang keine Informationen über nachhaltiges Wohnen erlangt." = "Bisher keine \nInformationen erhalten")) %>% 
+  mutate(themes = factor(themes, levels = themes[order(-Frequency)])) %>%  # Reorder factor levels
+  plot_ly(x = ~themes, y = ~Frequency, type = 'bar', name = 'Sustainability Themes',
+          marker = list(color = ~-Frequency, 
+                        colorscale = 'Viridis')) %>%
+  layout(title = '',
+         xaxis = list(title = '', 
+                      tickangle = -45),
+         yaxis = list(title = 'Antworthäufigkeit'))
+
+
+```
+:::
+
+
+::: 
 
 ### Column {width=30%}
 ```{r, echo=FALSE, message=FALSE, warning=FALSE}
