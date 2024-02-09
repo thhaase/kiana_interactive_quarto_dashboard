@@ -37,9 +37,10 @@ cat("Hier kommen Filter hin")
 ## Row {height=85%}
 
 ### Column {.tabset width=70%}
-```{r, echo=FALSE, message=FALSE, warning=FALSE}
-#| title: Themen
 
+::: {.card title="Themen"}
+An was denken Sie, wenn Sie den Begriff Nachhaltigkeit hören?
+```{r, echo=FALSE, message=FALSE, warning=FALSE}
 tibble(response = data$An.was.denken.Sie..wenn.Sie.den.Begriff.Nachhaltigkeit.hören..) %>%
   mutate(themes = str_split(response, ";")) %>% 
   unnest(themes) %>% 
@@ -48,30 +49,50 @@ tibble(response = data$An.was.denken.Sie..wenn.Sie.den.Begriff.Nachhaltigkeit.h�
   plot_ly(x = ~themes, y = ~Frequency, type = 'bar', name = 'Sustainability Themes',
           marker = list(color = ~-Frequency, 
                         colorscale = 'Greens')) %>%
-  layout(title = 'An was denken Sie, wenn Sie den Begriff Nachhaltigkeit hören?',
-         xaxis = list(title = 'Themen', tickangle = -45),
-         yaxis = list(title = ''))
+  layout(title = '',
+         xaxis = list(title = 'Themen', 
+                      tickangle = -45),
+         yaxis = list(title = 'Antworthäufigkeit'))
 ```
+:::
 
-
-
+::: {.card title="Wohnraum"}
+Ist es für Sie wichtig Ihren Wohnraum und Ihre Einrichtung nachhaltig zu gestalten?
 ```{r, echo=FALSE, message=FALSE, warning=FALSE}
-#| title: Wohnraum
 tibble(rating = data$Ist.es.für.Sie.wichtig.Ihren.Wohnraum.und.ihre.Einrichtung.nachhaltig.zu.gestalten.) %>%
   count(rating, name = "Frequency") %>%
 #  mutate(rating = factor(rating, levels = rating[order(-Frequency)])) %>%
 plot_ly(x = ~rating, y = ~Frequency, type = 'bar', name = 'Importance Ratings',
           marker = list(color = ~-Frequency, 
                         colorscale = 'Greens')) %>%
-  layout(title = 'Ist es für Sie wichtig Ihren Wohnraum und Ihre Einrichtung nachhaltig zu gestalten?',
+  layout(title = '',
          xaxis = list(title = 'Bewertung',
                       tickvals = ~rating,
-                      ticktext = c('1 \n Äußerst wichtig', '2', '3', '4 \n Überhaupt nicht wichtig')),
-         yaxis = list(title = ''))
+                      ticktext = c('1 \n Äußerst wichtig', '2', '3', '4 \n Überhaupt nicht wichtig'),
+                      tickangle = -45),
+         yaxis = list(title = 'Antworthäufigkeit'))
 
 ```
+:::
 
 
+::: {.card title="Upcycling"}
+Ist Ihnen der Begriff Upcycling im Bereich Wohnen bekannt?
+```{r, echo=FALSE, message=FALSE, warning=FALSE}
+tibble(response = data$Ist.Ihnen.der.Begriff.Upcycling.im.Bereich.Wohnen.bekannt.) %>%
+  mutate(response = recode(response, "Der Begriff ist mir bekannt, aber in anderen Lebensbereichen." = "Der Begriff ist mir bekannt, \naber in anderen Lebensbereichen.")) %>% 
+  count(response, name = "Frequency") %>%
+  mutate(response = factor(response, levels = response[order(-Frequency)])) %>%
+  plot_ly(x = ~response, y = ~Frequency, type = 'bar', name = 'Upcycling Awareness',
+          marker = list(color = ~-Frequency, 
+                        colorscale = 'Viridis')) %>%
+  layout(title = '',
+         xaxis = list(title = '',
+                      tickangle = -45),
+         yaxis = list(title = 'Antworthäufigkeit'))
+
+```
+:::
 
 ### Column {width=30%}
 ```{r, echo=FALSE, message=FALSE, warning=FALSE}
