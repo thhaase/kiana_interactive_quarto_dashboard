@@ -6,20 +6,19 @@
 ---
 
 
-## Interaktive Karte Nachhaltige Orte in Gießen
+## Kiana Serge Umfrage Tool
 
-[thhaase.github.io/interactive_map/](thhaase.github.io/interactive_map/)
+[https://thhaase.github.io/kiana_interactive_quarto_dashboard/](https://thhaase.github.io/kiana_interactive_quarto_dashboard/)
 
-Die Interaktive Karte wird im Rahmen des Seminars _Haus der Nachhaltigkeit 2_ bei Prof. Dr. York Kautt im WS23/24 erstellt. 
-Es werden Orte in Gießen abgebildet, welche im Zusammenhang mit Nachhaltigkeit und der ökologischen Transformation stehen.
-
+Das Interaktive Dashboard zu den Ergebnissen von Kiana Serge's Mini-Umfrage wird im Rahmen des Seminars _Haus der Nachhaltigkeit 2_ bei Prof. Dr. York Kautt im WS23/24 erstellt. 
+Die Umfrageergebnisse werden mit einem Quarto-Dashboard interaktiv dargestellt.
 
 ## Einbinden in Wordpress-Website 
 In Elementor das _"Shortcode"_ Modul an der gewünschten Stelle einfügen. 
 Als shortcode folgendes snippet einfügen: 
 ```html
 <iframe 
-  src="https://thhaase.github.io/interactive_map/" 
+  src="https://thhaase.github.io/kiana_interactive_quarto_dashboard/" 
   width= 100%
   height=750px 
   frameborder="0" allowfullscreen
