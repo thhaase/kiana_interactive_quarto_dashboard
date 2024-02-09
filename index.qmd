@@ -11,8 +11,10 @@ format:
 
 ```{r, echo=FALSE, message=FALSE, warning=FALSE}
 library(crosstalk)
-library(dplyr)
+library(tidyverse)
 library(DT)
+library(plotly)
+
 
 # load data ----
 data <- read.csv("data.csv") %>% 
@@ -21,9 +23,37 @@ data <- read.csv("data.csv") %>%
   
 # create shared data for crosstalk
 shared_data <- SharedData$new(data, key = ~ID)
+```
+
+## Row {height=20%}
 
 
-datatable(data)
+```{r, echo=FALSE, message=FALSE, warning=FALSE}
 
+cat("Hier kommen Filter hin")
+```
 
+## Row {height=80%}
+
+### Column {.tabset width=70%}
+```{r, echo=FALSE, message=FALSE, warning=FALSE}
+#| title: Themen
+
+tibble(response = data$An.was.denken.Sie..wenn.Sie.den.Begriff.Nachhaltigkeit.hören..) %>%
+  mutate(themes = str_split(response, ";")) %>% 
+  unnest(themes) %>% 
+  count(themes, name = "Frequency") %>%
+  mutate(themes = factor(themes, levels = themes[order(-Frequency)])) %>%  # Reorder factor levels
+  plot_ly(x = ~themes, y = ~Frequency, type = 'bar', name = 'Sustainability Themes',
+          marker = list(color = ~-Frequency, 
+                        colorscale = 'Greens')) %>%
+  layout(title = 'An was denken Sie, wenn Sie den Begriff Nachhaltigkeit hören?',
+         xaxis = list(title = 'Themen', tickangle = -45),
+         yaxis = list(title = 'Frequenz'))
+```
+
+### Column {width=30%}
+```{r, echo=FALSE, message=FALSE, warning=FALSE}
+
+cat("??????????????????????????ß")
 ```
