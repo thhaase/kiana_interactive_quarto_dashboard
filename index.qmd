@@ -1,0 +1,29 @@
+---
+title: "Umfrageergebnisse zum Nachhaltigen Wohnen"
+format:
+  dashboard:
+#  html: 
+#    toc: false
+    theme: 
+      - cosmo
+      - custom.scss
+---
+
+```{r, echo=FALSE, message=FALSE, warning=FALSE}
+library(crosstalk)
+library(dplyr)
+library(DT)
+
+# load data ----
+data <- read.csv("data.csv") %>% 
+  mutate(ID = row_number()) %>% 
+  select(-Zeitstempel)
+  
+# create shared data for crosstalk
+shared_data <- SharedData$new(data, key = ~ID)
+
+
+datatable(data)
+
+
+```
