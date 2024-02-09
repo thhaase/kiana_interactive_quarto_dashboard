@@ -14,7 +14,7 @@ library(crosstalk)
 library(tidyverse)
 library(DT)
 library(plotly)
-
+library(RColorBrewer)
 
 # load data ----
 data <- read.csv("data.csv") %>% 
@@ -25,15 +25,16 @@ data <- read.csv("data.csv") %>%
 shared_data <- SharedData$new(data, key = ~ID)
 ```
 
-## Row {height=20%}
+## Row {height=15% expandable: false}
 
 
 ```{r, echo=FALSE, message=FALSE, warning=FALSE}
+#| expandable: false
 
 cat("Hier kommen Filter hin")
 ```
 
-## Row {height=80%}
+## Row {height=85%}
 
 ### Column {.tabset width=70%}
 ```{r, echo=FALSE, message=FALSE, warning=FALSE}
@@ -49,11 +50,32 @@ tibble(response = data$An.was.denken.Sie..wenn.Sie.den.Begriff.Nachhaltigkeit.h�
                         colorscale = 'Greens')) %>%
   layout(title = 'An was denken Sie, wenn Sie den Begriff Nachhaltigkeit hören?',
          xaxis = list(title = 'Themen', tickangle = -45),
-         yaxis = list(title = 'Frequenz'))
+         yaxis = list(title = ''))
 ```
+
+
+
+```{r, echo=FALSE, message=FALSE, warning=FALSE}
+#| title: Wohnraum
+tibble(rating = data$Ist.es.für.Sie.wichtig.Ihren.Wohnraum.und.ihre.Einrichtung.nachhaltig.zu.gestalten.) %>%
+  count(rating, name = "Frequency") %>%
+#  mutate(rating = factor(rating, levels = rating[order(-Frequency)])) %>%
+plot_ly(x = ~rating, y = ~Frequency, type = 'bar', name = 'Importance Ratings',
+          marker = list(color = ~-Frequency, 
+                        colorscale = 'Greens')) %>%
+  layout(title = 'Ist es für Sie wichtig Ihren Wohnraum und Ihre Einrichtung nachhaltig zu gestalten?',
+         xaxis = list(title = 'Bewertung',
+                      tickvals = ~rating,
+                      ticktext = c('1 \n Äußerst wichtig', '2', '3', '4 \n Überhaupt nicht wichtig')),
+         yaxis = list(title = ''))
+
+```
+
+
 
 ### Column {width=30%}
 ```{r, echo=FALSE, message=FALSE, warning=FALSE}
 
-cat("??????????????????????????ß")
+cat("???")
 ```
+

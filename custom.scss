@@ -3,6 +3,9 @@
 /*-- scss:defaults --*/
 $background: #e5f2dc;
 $darkblue: #19486A;
+$yellow: #FDF5B6;
+$lightpink: #F5DDE7;
+$pink: #e9b6cb;
 
 /*-- scss:rules --*/
 body {
@@ -40,6 +43,38 @@ body {
 .control-label {
   font-family: 'Poppins', sans-serif;
   color: $darkblue;
+}
+
+
+/*dashboardcards*/
+.card {
+  border-radius: 25px;
+  border: 2px solid $darkblue;
+}
+
+.card-header {
+  background: $lightpink;
+  border: none;
+}
+
+.nav-link {
+  color: $darkblue;
+  border-top-left-radius: 25px;
+  border-top-right-radius: 25px;
+  font-family: 'Poppins', sans-serif;
+  border: none;
+}
+.nav-link:hover {
+  background: $pink;
+  border: none;
+}
+.nav-link.active {
+  border: none;
+}
+
+.nav-tabs {
+  border: none;
+  --bs-nav-tabs-border-width: 0px;
 }
 
 /*-- scss:mixins --*/
