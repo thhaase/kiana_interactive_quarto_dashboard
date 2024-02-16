@@ -2,8 +2,7 @@
 title: "Umfrageergebnisse zum Nachhaltigen Wohnen"
 format:
   dashboard:
-#  html: 
-#    toc: false
+    toc: false
     theme: 
       - cosmo
       - custom.scss
@@ -27,16 +26,32 @@ data <- read.csv("data.csv") %>%
 shared_data <- SharedData$new(data, key = ~ID)
 ```
 
+## Row {height=50%}
+
+### Column {.tabset width=50%}
+::: {.card title="Beschreibung"}
 
 Wissen über nachhaltiges wohnen (1,6 und 9)
 Umsetzung von n. W. (3,4,7,8) 
 Interesse (2, 5 und 11) 
 10 als eigene Gruppe vlt ?
+:::
 
-Wissen und Interesse 1,2,5,6,9
-Umsetzung 3,4,7,8,10
+::: {.card title="Inhaltsverzeichnis"}
 
-## Row {height=50%}
+1. **Themen:** Assoziationen mit Nachhaltigkeit
+2. **Wohnraum:** Priorität nachhaltiger Wohnraumgestaltung
+3. **Upcycling Bewusstsein:** Bekanntheit von Upcycling im Wohnbereich
+4. **Upcycling Praxis:** Erfahrungen mit der Aufwertung von Wohngegenständen
+5. **Workshop:** Interesse an Upcycling-Workshops
+6. **Informationsquellen:** Wege zur Information über nachhaltiges Wohnen
+7. **Second-Hand Nutzung:** Nutzung gebrauchter Möbel im Wohnbereich
+8. **Nachhaltige Kauforte:** Bekannte Orte für nachhaltige Wohnkäufe
+9. **Produkttransparenz:** Meinungen zur Ressourcentransparenz bei Produkten
+10. **Wunschthemen in Gießen:** Gewünschte Angebote zu Wohnen in Gießen
+11. **Zukünftige Integration:** Wichtigkeit zukünftiger nachhaltiger Wohnkonzepte
+:::
+
 
 ### Column {.tabset width=50%}
 
@@ -50,13 +65,77 @@ tibble(response = data$An.was.denken.Sie..wenn.Sie.den.Begriff.Nachhaltigkeit.h�
   mutate(themes = factor(themes, levels = themes[order(-Frequency)])) %>%  # Reorder factor levels
   plot_ly(x = ~themes, y = ~Frequency, type = 'bar', name = 'Sustainability Themes',
           marker = list(color = ~-Frequency, 
-                        colorscale = 'Greens')) %>%
+                        colorscale = list(c(0, '#10451d'), c(1, '#6ede8a')))) %>%
   layout(title = '',
          xaxis = list(title = '', 
                       tickangle = -45),
          yaxis = list(title = 'Antworthäufigkeit'))
 ```
 :::
+
+::: {.card title="6 Informationsquellen"}
+Wie haben Sie bisher Informationen darüber erhalten, wie man nachhaltig "Wohnen" kann?
+```{r, echo=FALSE, message=FALSE, warning=FALSE}
+tibble(response = data$Wie.haben.Sie.bisher.Informationen.darüber.erhalten..wie.man.nachhaltig..Wohnen..kann.) %>%
+  mutate(themes = str_split(response, ";")) %>% 
+  unnest(themes) %>% 
+  count(themes, name = "Frequency") %>%
+    mutate(themes = recode(themes, "Ich habe bislang keine Informationen über nachhaltiges Wohnen erlangt." = "Bisher keine \nInformationen erhalten")) %>% 
+  mutate(themes = factor(themes, levels = themes[order(-Frequency)])) %>%  # Reorder factor levels
+  plot_ly(x = ~themes, y = ~Frequency, type = 'bar', name = 'Sustainability Themes',
+          marker = list(color = ~-Frequency, 
+                        colorscale = list(c(0, '#10451d'), c(1, '#6ede8a')))) %>%
+  layout(title = '',
+         xaxis = list(title = '', 
+                      tickangle = -45),
+         yaxis = list(title = 'Antworthäufigkeit'))
+
+
+```
+:::
+
+
+::: {.card title="9 Produkttransparenz"}
+
+Wären Sie dafür, den Ressourcenverbrauch von Einrichtungsgegenständen auf den Produkten transparent zu machen?
+```{r, echo=FALSE, message=FALSE, warning=FALSE}
+tibble(response = data$Wären.Sie.dafür..den.Ressourcenverbrauch.von.Einrichtungsgegenständen.auf.den.Produkten.transparent.zu.machen.) %>%
+  filter(response %in% c("Ja", "Nein")) %>% 
+  count(response, name = "Frequency") %>%
+  mutate(response = factor(response, levels = response[order(-Frequency)])) %>%
+  plot_ly(x = ~response, y = ~Frequency, type = 'bar', name = 'Transparency',
+          marker = list(color = ~-Frequency, 
+                        colorscale = list(c(0, '#10451d'), c(1, '#6ede8a')))) %>%
+  layout(title = '',
+         xaxis = list(title = '',
+                      tickangle = -45),
+         yaxis = list(title = 'Antworthäufigkeit'))
+
+```
+:::
+
+::: {.card title="10 Wunschthemen in Gießen"}
+Zu welchem Thema im Bereich Wohnen würden Sie sich ein Angebot in Gießen wünschen (z.B. Informationen, Workshops)?
+```{r echo=FALSE, message=FALSE, warning=FALSE}
+
+tibble(Antwort = data$Zu.welchem.Thema.im.Bereich.Wohnen.würden.Sie.sich.ein.Angebot.in.Gießen.wünschen..z.B..Informationen..Workshops..) %>% 
+filter(Antwort != "" & !is.na(Antwort) & Antwort != "-") %>%
+  select(Antwort) %>%
+  mutate(Antwort = str_trim(Antwort)) %>% 
+  filter(Antwort != "") %>% 
+  datatable(data, 
+            options = list(searching = FALSE, 
+                           info = FALSE), 
+            rownames = FALSE)
+```
+:::
+
+
+
+## Row {height=50%}
+
+### Column {.tabset width=50%}
+
 
 ::: {.card title="2 Wohnraum"}
 Ist es für Sie wichtig Ihren Wohnraum und ihre Einrichtung nachhaltig zu gestalten?
@@ -66,7 +145,7 @@ tibble(rating = data$Ist.es.für.Sie.wichtig.Ihren.Wohnraum.und.ihre.Einrichtung
 #  mutate(rating = factor(rating, levels = rating[order(-Frequency)])) %>%
 plot_ly(x = ~rating, y = ~Frequency, type = 'bar', name = 'Importance Ratings',
           marker = list(color = ~-Frequency, 
-                        colorscale = 'Greens')) %>%
+                        colorscale = list(c(0, '#10451d'), c(1, '#6ede8a')))) %>%
   layout(title = '',
          xaxis = list(title = '',
                       tickvals = ~rating,
@@ -79,7 +158,7 @@ plot_ly(x = ~rating, y = ~Frequency, type = 'bar', name = 'Importance Ratings',
 
 
 
-::: {.card title="5 Workshop"}
+::: {.card title="5 Workshopinteresse"}
 Hätten Sie Interesse, an einem Upcycling-Workshop teilzunehmen?
 ```{r, echo=FALSE, message=FALSE, warning=FALSE}
 tibble(response = data$Hätten.Sie.Interesse..an.einem.Upcycling.Workshop.teilzunehmen.) %>%
@@ -88,7 +167,7 @@ tibble(response = data$Hätten.Sie.Interesse..an.einem.Upcycling.Workshop.teilzu
   mutate(response = factor(response, levels = response[order(-Frequency)])) %>%
   plot_ly(x = ~response, y = ~Frequency, type = 'bar', name = 'Workshop Interest',
           marker = list(color = ~-Frequency, 
-                        colorscale = 'Viridis')) %>%
+                        colorscale = list(c(0, '#10451d'), c(1, '#6ede8a')))) %>%
   layout(title = '',
          xaxis = list(title = '',
                       tickangle = -45),
@@ -97,51 +176,7 @@ tibble(response = data$Hätten.Sie.Interesse..an.einem.Upcycling.Workshop.teilzu
 ```
 :::
 
-
-::: {.card title="6 Wohnen"}
-Wie haben Sie bisher Informationen darüber erhalten, wie man nachhaltig "Wohnen" kann?
-```{r, echo=FALSE, message=FALSE, warning=FALSE}
-tibble(response = data$Wie.haben.Sie.bisher.Informationen.darüber.erhalten..wie.man.nachhaltig..Wohnen..kann.) %>%
-  mutate(themes = str_split(response, ";")) %>% 
-  unnest(themes) %>% 
-  count(themes, name = "Frequency") %>%
-    mutate(themes = recode(themes, "Ich habe bislang keine Informationen über nachhaltiges Wohnen erlangt." = "Bisher keine \nInformationen erhalten")) %>% 
-  mutate(themes = factor(themes, levels = themes[order(-Frequency)])) %>%  # Reorder factor levels
-  plot_ly(x = ~themes, y = ~Frequency, type = 'bar', name = 'Sustainability Themes',
-          marker = list(color = ~-Frequency, 
-                        colorscale = 'Viridis')) %>%
-  layout(title = '',
-         xaxis = list(title = '', 
-                      tickangle = -45),
-         yaxis = list(title = 'Antworthäufigkeit'))
-
-
-```
-:::
-
-
-::: {.card title="9 Verwendung"}
-
-Wären Sie dafür, den Ressourcenverbrauch von Einrichtungsgegenständen auf den Produkten transparent zu machen?
-```{r, echo=FALSE, message=FALSE, warning=FALSE}
-tibble(response = data$Wären.Sie.dafür..den.Ressourcenverbrauch.von.Einrichtungsgegenständen.auf.den.Produkten.transparent.zu.machen.) %>%
-  filter(response %in% c("Ja", "Nein")) %>% 
-  count(response, name = "Frequency") %>%
-  mutate(response = factor(response, levels = response[order(-Frequency)])) %>%
-  plot_ly(x = ~response, y = ~Frequency, type = 'bar', name = 'Transparency',
-          marker = list(color = ~-Frequency, 
-                        colorscale = 'Viridis')) %>%
-  layout(title = '',
-         xaxis = list(title = '',
-                      tickangle = -45),
-         yaxis = list(title = 'Antworthäufigkeit'))
-
-```
-:::
-
-
-
-::: {.card title="11 Zukunft"}
+::: {.card title="11 Zukünftige Integration"}
 Ist es für Sie wichtig in der Zukunft, im Lebensbereich "Wohnen" Nachhaltigkeit zu integrieren?
 
 ```{r, echo=FALSE, message=FALSE, warning=FALSE}
@@ -152,7 +187,7 @@ data %>%
   complete(response = c("1", "2", "3", "4"), fill = list(Frequency = 0)) %>%
   plot_ly(x = ~response, y = ~Frequency, type = 'bar', name = 'Sustainability',
           marker = list(color = ~-Frequency, 
-                        colorscale = 'Viridis')) %>%
+                        colorscale = list(c(0, '#10451d'), c(1, '#6ede8a')))) %>%
   layout(title = '',
          xaxis = list(title = '',
                       tickangle = -45,
@@ -170,7 +205,7 @@ data %>%
 
 ### Column {.tabset width=50%}
 
-::: {.card title="3 Upcycling"}
+::: {.card title="3 Upcycling Bewusstsein"}
 Ist Ihnen der Begriff Upcycling im Bereich Wohnen bekannt?
 ```{r, echo=FALSE, message=FALSE, warning=FALSE}
 tibble(response = data$Ist.Ihnen.der.Begriff.Upcycling.im.Bereich.Wohnen.bekannt.) %>%
@@ -179,7 +214,7 @@ tibble(response = data$Ist.Ihnen.der.Begriff.Upcycling.im.Bereich.Wohnen.bekannt
   mutate(response = factor(response, levels = response[order(-Frequency)])) %>%
   plot_ly(x = ~response, y = ~Frequency, type = 'bar', name = 'Upcycling Awareness',
           marker = list(color = ~-Frequency, 
-                        colorscale = 'Viridis')) %>%
+                        colorscale = list(c(0, '#10451d'), c(1, '#6ede8a')))) %>%
   layout(title = '',
          xaxis = list(title = '',
                       tickangle = -45),
@@ -188,7 +223,7 @@ tibble(response = data$Ist.Ihnen.der.Begriff.Upcycling.im.Bereich.Wohnen.bekannt
 ```
 :::
 
-::: {.card title="4 Upcycling"}
+::: {.card title="4 Upcycling Praxis"}
 Haben Sie in der Vergangenheit alte oder nutzlos gewordene Möbel, sowie Gegenstände selber aufgewertet, um ihre Lebensdauer zu verlängern?
 ```{r, echo=FALSE, message=FALSE, warning=FALSE}
 tibble(response = data$Haben.Sie.in.der.Vergangenheit.alte.oder.nutzlos.gewordene.Möbel..sowie.Gegenstände.selber.aufgewertet..um.ihre.Lebensdauer.zu.verlängern.) %>%
@@ -196,7 +231,7 @@ tibble(response = data$Haben.Sie.in.der.Vergangenheit.alte.oder.nutzlos.geworden
   mutate(response = factor(response, levels = response[order(-Frequency)])) %>%
   plot_ly(x = ~response, y = ~Frequency, type = 'bar', name = 'Upcycling Behavior',
           marker = list(color = ~-Frequency, 
-                        colorscale = 'Viridis')) %>%
+                        colorscale = list(c(0, '#10451d'), c(1, '#6ede8a')))) %>%
   layout(title = '',
          xaxis = list(title = '',
                       tickangle = -45),
@@ -206,7 +241,7 @@ tibble(response = data$Haben.Sie.in.der.Vergangenheit.alte.oder.nutzlos.geworden
 
 
 
-::: {.card title="7 Verwendung"}
+::: {.card title="7 Second-Hand Nutzung"}
 Haben Sie in der Vergangenheit gebrauchte Möbel (Second Hand Möbel) gekauft und verwendet?
 ```{r, echo=FALSE, message=FALSE, warning=FALSE}
 tibble(response = data$Haben.Sie.in.der.Vergangenheit.gebrauchte.Möbel..Second.Hand.Möbel..gekauft.und.verwendet.) %>%
@@ -214,7 +249,7 @@ tibble(response = data$Haben.Sie.in.der.Vergangenheit.gebrauchte.Möbel..Second.
   mutate(response = factor(response, levels = response[order(-Frequency)])) %>%
   plot_ly(x = ~response, y = ~Frequency, type = 'bar', name = 'Second Hand Furniture',
           marker = list(color = ~-Frequency, 
-                        colorscale = 'Viridis')) %>%
+                        colorscale = list(c(0, '#10451d'), c(1, '#6ede8a')))) %>%
   layout(title = '',
          xaxis = list(title = '',
                       tickangle = -45),
@@ -223,7 +258,7 @@ tibble(response = data$Haben.Sie.in.der.Vergangenheit.gebrauchte.Möbel..Second.
 ```
 ::: 
 
-::: {.card title="8 Läden"}
+::: {.card title="8 Nachhaltige Kauforte"}
 Sind Ihnen Läden oder Märkte bekannt, in denen man nachhaltige Möbel, sowie gebrauchte Möbel kaufen könnte?
 
 ```{r, echo=FALSE, message=FALSE, warning=FALSE}
@@ -233,47 +268,11 @@ tibble(response = data$Sind.Ihnen.Läden.oder.Märkte.bekannt..in.denen.man.nach
   mutate(response = factor(response, levels = response[order(-Frequency)])) %>%
   plot_ly(x = ~response, y = ~Frequency, type = 'bar', name = 'Transparency',
           marker = list(color = ~-Frequency, 
-                        colorscale = 'Viridis')) %>%
+                        colorscale = list(c(0, '#10451d'), c(1, '#6ede8a')))) %>%
   layout(title = '',
          xaxis = list(title = '',
                       tickangle = -45),
          yaxis = list(title = 'Antworthäufigkeit'))
-
-```
-:::
-
-
-::: {.card title="10 Wünsche"}
-Zu welchem Thema im Bereich Wohnen würden Sie sich ein Angebot in Gießen wünschen (z.B. Informationen, Workshops)?
-```{r, echo=FALSE, message=FALSE, warning=FALSE}
-#| layout-ncol: 2
-
-tibble(Antwort = data$Zu.welchem.Thema.im.Bereich.Wohnen.würden.Sie.sich.ein.Angebot.in.Gießen.wünschen..z.B..Informationen..Workshops..) %>% 
-filter(Antwort != "" & !is.na(Antwort) & Antwort != "-") %>%
-  select(Antwort) %>%
-  mutate(Antwort = str_trim(Antwort)) %>% 
-  filter(Antwort != "") %>% 
-  datatable(data, 
-            options = list(searching = FALSE, 
-                           info = FALSE), 
-            rownames = FALSE)
-
-
-custom_stopwords <- data_frame(word = c("von","wie","die","z.b","nur","mit","man","kann",                    "ich", "ein", "alle", "aber"))
-
-data %>%
-  unnest_tokens(word, Zu.welchem.Thema.im.Bereich.Wohnen.würden.Sie.sich.ein.Angebot.in.Gießen.wünschen..z.B..Informationen..Workshops..) %>%  
-  anti_join(custom_stopwords, by = "word") %>%
-  count(word, sort = TRUE) %>%
-  filter(n >= 2) %>%
-  top_n(10, n) %>%
-  mutate(word = str_to_title(word)) %>% 
-ggplot(aes(x = reorder(word, n), y = n, fill = n)) +
-  geom_col() +
-  coord_flip() +
-  scale_fill_gradient(low = "lightgreen", high = "darkgreen") +
-  labs(x = "", y = "Anzahl", title = "Am häufigsten genannte Wörter") +
-  theme(legend.position = "none")
 
 ```
 :::

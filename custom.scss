@@ -57,6 +57,13 @@ body {
   border: none;
 }
 
+.card-title {
+  font-family: 'Poppins', sans-serif;
+  color: $darkblue;
+  font-size: 20px;
+  font-weight: 900;
+}
+
 .nav-link {
   color: $darkblue;
   border-top-left-radius: 25px;
