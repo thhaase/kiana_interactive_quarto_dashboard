@@ -66,6 +66,15 @@ body {
 
 
 /*dashboardcards*/
+
+.card[data-title="Beschreibung"] .card-body p {
+  font-size: 19px; 
+  color: $darkblue;
+  font-weight: 200;
+  font-family: 'Poppins', sans-serif;
+}
+
+
 .card {
   border-radius: 25px;
   border: 2px solid $darkblue;
@@ -85,16 +94,19 @@ body {
 
 .nav-link {
   color: $darkblue;
+  font-size: 20px;
   border-top-left-radius: 25px;
   border-top-right-radius: 25px;
   font-family: 'Poppins', sans-serif;
   border: none;
 }
 .nav-link:hover {
+  font-size: 20px;
   background: $pink;
   border: none;
 }
 .nav-link.active {
+  font-size: 20px;
   border: none;
 }
 

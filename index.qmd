@@ -17,6 +17,7 @@ library(RColorBrewer)
 library(knitr)
 library(tidyverse)
 library(tidytext)
+library(htmltools)
 
 # load data ----
 data <- read.csv("data.csv") %>% 
@@ -31,7 +32,13 @@ shared_data <- SharedData$new(data, key = ~ID)
 
 ### Column {width=50%}
 ::: {.card title="Beschreibung"}
-Abschließend zum Thema haben wir eine Umfrage durchgeführt, die sich mit dem Bewusstsein, der Interpretation, der individuellen Umsetzung und der Bewertung von nachhaltigem Wohnen befasst. Unser Ziel war es, die Verbindung von Nachhaltigkeit und privatem Wohnen unter Studierenden des Studiengangs Social Sciences an der JLU zu erfassen. Insgesamt haben 42 Personen an der Umfrage teilgenommen. Die Ergebnisse sind in drei Blöcken dargestellt, wobei jeder Block 3-4 Fragen enthält. Klick dich gerne durch!
+Abschließend zum Thema haben wir eine Umfrage durchgeführt, die sich mit dem Bewusstsein, der Interpretation, der individuellen Umsetzung und der Bewertung von nachhaltigem Wohnen befasst. <br>
+<br>
+Unser Ziel war es, die Verbindung von Nachhaltigkeit und privatem Wohnen unter Studierenden des Studiengangs Social Sciences an der JLU zu erfassen.<br>
+<br>
+Insgesamt haben 42 Personen an der Umfrage teilgenommen. Die Ergebnisse sind in drei Blöcken dargestellt, wobei jeder Block 3-4 Fragen enthält. <br> 
+<br>
+Klick dich gerne durch!
 
 <!-- Wissen über nachhaltiges wohnen (1,6 und 9) -->
 <!-- Umsetzung von n. W. (3,4,7,8) -->
