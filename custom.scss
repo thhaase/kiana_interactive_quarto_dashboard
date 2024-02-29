@@ -20,15 +20,26 @@ body {
   display: block;
 }
 
-.navbar-brand-container {
-  align-items: center;
+
+/* -- title --  */
+
+#quarto-dashboard-header {
+ align-items: center;
+ align-content: center;
+ align-self: center;
+}
+.navbar-brand-container, .navbar-title {
+  display: flex;
+  justify-content: center;
+  align-items: center !important; 
 }
 
 .navbar-title-text {
   font-family: 'Poppins', sans-serif;
+  font-weight: bold;
   color: $darkblue;
   
-  text-align: center;
+  text-align: center !important; 
   line-height: 105%;
 
   margin-top: 25px;
@@ -69,7 +80,7 @@ body {
   font-family: 'Poppins', sans-serif;
   color: $darkblue;
   font-size: 20px;
-  font-weight: 900;
+  font-weight: normal;
 }
 
 .nav-link {

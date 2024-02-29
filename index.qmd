@@ -2,6 +2,7 @@
 title: "Umfrageergebnisse zum Nachhaltigen Wohnen"
 format:
   dashboard:
+    expandable: false
     toc: false
     theme: 
       - cosmo
@@ -28,9 +29,9 @@ shared_data <- SharedData$new(data, key = ~ID)
 
 ## Row {height=50%}
 
-### Column {.tabset width=50%}
+### Column {width=50%}
 ::: {.card title="Beschreibung"}
-Abschließend zum Thema haben wir eine Umfrage durchgeführt, die sich mit dem Bewusstsein, der Interpretation, der individuellen Umsetzung und der Bewertung von nachhaltigem Wohnen befasst. Unser Ziel war es, die Verbindung von Nachhaltigkeit und privatem Wohnen unter Studierenden des Studiengangs Social Sciences an der JLU zu erfassen. Insgesamt haben 42 Personen an der Umfrage teilgenommen. Die Ergebnisse sind in drei Blöcken dargestellt, wobei jeder Block 3-4 Fragen enthält. Sie können sich gerne durchklicken!
+Abschließend zum Thema haben wir eine Umfrage durchgeführt, die sich mit dem Bewusstsein, der Interpretation, der individuellen Umsetzung und der Bewertung von nachhaltigem Wohnen befasst. Unser Ziel war es, die Verbindung von Nachhaltigkeit und privatem Wohnen unter Studierenden des Studiengangs Social Sciences an der JLU zu erfassen. Insgesamt haben 42 Personen an der Umfrage teilgenommen. Die Ergebnisse sind in drei Blöcken dargestellt, wobei jeder Block 3-4 Fragen enthält. Klick dich gerne durch!
 
 <!-- Wissen über nachhaltiges wohnen (1,6 und 9) -->
 <!-- Umsetzung von n. W. (3,4,7,8) -->
@@ -38,25 +39,10 @@ Abschließend zum Thema haben wir eine Umfrage durchgeführt, die sich mit dem B
 <!-- 10 als eigene Gruppe vlt ? -->
 :::
 
-::: {.card title="Inhaltsverzeichnis"}
-
-1. **Themen:** Assoziationen mit Nachhaltigkeit
-2. **Wohnraum:** Priorität nachhaltiger Wohnraumgestaltung
-3. **Upcycling Bewusstsein:** Bekanntheit von Upcycling im Wohnbereich
-4. **Upcycling Praxis:** Erfahrungen mit der Aufwertung von Wohngegenständen
-5. **Workshop:** Interesse an Upcycling-Workshops
-6. **Informationsquellen:** Wege zur Information über nachhaltiges Wohnen
-7. **Second-Hand Nutzung:** Nutzung gebrauchter Möbel im Wohnbereich
-8. **Nachhaltige Kauforte:** Bekannte Orte für nachhaltige Wohnkäufe
-9. **Produkttransparenz:** Meinungen zur Ressourcentransparenz bei Produkten
-10. **Wunschthemen in Gießen:** Gewünschte Angebote zu Wohnen in Gießen
-11. **Zukünftige Integration:** Wichtigkeit zukünftiger nachhaltiger Wohnkonzepte
-:::
-
 
 ### Column {.tabset width=50%}
 
-::: {.card title="1 Themen"}
+::: {.card title="Themen"}
 An was denken Sie, wenn Sie den Begriff Nachhaltigkeit hören? 
 ```{r, echo=FALSE, message=FALSE, warning=FALSE}
 tibble(response = data$An.was.denken.Sie..wenn.Sie.den.Begriff.Nachhaltigkeit.hören..) %>%
@@ -74,7 +60,7 @@ tibble(response = data$An.was.denken.Sie..wenn.Sie.den.Begriff.Nachhaltigkeit.h�
 ```
 :::
 
-::: {.card title="6 Informationsquellen"}
+::: {.card title="Informationsquellen"}
 Wie haben Sie bisher Informationen darüber erhalten, wie man nachhaltig "Wohnen" kann?
 ```{r, echo=FALSE, message=FALSE, warning=FALSE}
 tibble(response = data$Wie.haben.Sie.bisher.Informationen.darüber.erhalten..wie.man.nachhaltig..Wohnen..kann.) %>%
@@ -96,7 +82,7 @@ tibble(response = data$Wie.haben.Sie.bisher.Informationen.darüber.erhalten..wie
 :::
 
 
-::: {.card title="9 Produkttransparenz"}
+::: {.card title="Produkttransparenz"}
 
 Wären Sie dafür, den Ressourcenverbrauch von Einrichtungsgegenständen auf den Produkten transparent zu machen?
 ```{r, echo=FALSE, message=FALSE, warning=FALSE}
@@ -115,7 +101,7 @@ tibble(response = data$Wären.Sie.dafür..den.Ressourcenverbrauch.von.Einrichtun
 ```
 :::
 
-::: {.card title="10 Wunschthemen in Gießen"}
+::: {.card title="Wunschthemen in Gießen"}
 Zu welchem Thema im Bereich Wohnen würden Sie sich ein Angebot in Gießen wünschen (z.B. Informationen, Workshops)?
 ```{r echo=FALSE, message=FALSE, warning=FALSE}
 
@@ -138,7 +124,7 @@ filter(Antwort != "" & !is.na(Antwort) & Antwort != "-") %>%
 ### Column {.tabset width=50%}
 
 
-::: {.card title="2 Wohnraum"}
+::: {.card title="Wohnraum"}
 Ist es für Sie wichtig Ihren Wohnraum und ihre Einrichtung nachhaltig zu gestalten?
 ```{r, echo=FALSE, message=FALSE, warning=FALSE}
 tibble(rating = data$Ist.es.für.Sie.wichtig.Ihren.Wohnraum.und.ihre.Einrichtung.nachhaltig.zu.gestalten.) %>%
@@ -159,7 +145,7 @@ plot_ly(x = ~rating, y = ~Frequency, type = 'bar', name = 'Importance Ratings',
 
 
 
-::: {.card title="5 Workshopinteresse"}
+::: {.card title="Workshopinteresse"}
 Hätten Sie Interesse, an einem Upcycling-Workshop teilzunehmen?
 ```{r, echo=FALSE, message=FALSE, warning=FALSE}
 tibble(response = data$Hätten.Sie.Interesse..an.einem.Upcycling.Workshop.teilzunehmen.) %>%
@@ -177,7 +163,7 @@ tibble(response = data$Hätten.Sie.Interesse..an.einem.Upcycling.Workshop.teilzu
 ```
 :::
 
-::: {.card title="11 Zukünftige Integration"}
+::: {.card title="Zukünftige Integration"}
 Ist es für Sie wichtig in der Zukunft, im Lebensbereich "Wohnen" Nachhaltigkeit zu integrieren?
 
 ```{r, echo=FALSE, message=FALSE, warning=FALSE}
@@ -206,7 +192,7 @@ data %>%
 
 ### Column {.tabset width=50%}
 
-::: {.card title="3 Upcycling Bewusstsein"}
+::: {.card title="Upcycling Bewusstsein"}
 Ist Ihnen der Begriff Upcycling im Bereich Wohnen bekannt?
 ```{r, echo=FALSE, message=FALSE, warning=FALSE}
 tibble(response = data$Ist.Ihnen.der.Begriff.Upcycling.im.Bereich.Wohnen.bekannt.) %>%
@@ -224,7 +210,7 @@ tibble(response = data$Ist.Ihnen.der.Begriff.Upcycling.im.Bereich.Wohnen.bekannt
 ```
 :::
 
-::: {.card title="4 Upcycling Praxis"}
+::: {.card title="Upcycling Praxis"}
 Haben Sie in der Vergangenheit alte oder nutzlos gewordene Möbel, sowie Gegenstände selber aufgewertet, um ihre Lebensdauer zu verlängern?
 ```{r, echo=FALSE, message=FALSE, warning=FALSE}
 tibble(response = data$Haben.Sie.in.der.Vergangenheit.alte.oder.nutzlos.gewordene.Möbel..sowie.Gegenstände.selber.aufgewertet..um.ihre.Lebensdauer.zu.verlängern.) %>%
@@ -242,7 +228,7 @@ tibble(response = data$Haben.Sie.in.der.Vergangenheit.alte.oder.nutzlos.geworden
 
 
 
-::: {.card title="7 Second-Hand Nutzung"}
+::: {.card title="Second-Hand Nutzung"}
 Haben Sie in der Vergangenheit gebrauchte Möbel (Second Hand Möbel) gekauft und verwendet?
 ```{r, echo=FALSE, message=FALSE, warning=FALSE}
 tibble(response = data$Haben.Sie.in.der.Vergangenheit.gebrauchte.Möbel..Second.Hand.Möbel..gekauft.und.verwendet.) %>%
@@ -259,7 +245,7 @@ tibble(response = data$Haben.Sie.in.der.Vergangenheit.gebrauchte.Möbel..Second.
 ```
 ::: 
 
-::: {.card title="8 Nachhaltige Kauforte"}
+::: {.card title="Nachhaltige Kauforte"}
 Sind Ihnen Läden oder Märkte bekannt, in denen man nachhaltige Möbel, sowie gebrauchte Möbel kaufen könnte?
 
 ```{r, echo=FALSE, message=FALSE, warning=FALSE}
