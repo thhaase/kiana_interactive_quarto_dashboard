@@ -30,11 +30,12 @@ shared_data <- SharedData$new(data, key = ~ID)
 
 ### Column {.tabset width=50%}
 ::: {.card title="Beschreibung"}
+Abschließend zum Thema haben wir eine Umfrage durchgeführt, die sich mit dem Bewusstsein, der Interpretation, der individuellen Umsetzung und der Bewertung von nachhaltigem Wohnen befasst. Unser Ziel war es, die Verbindung von Nachhaltigkeit und privatem Wohnen unter Studierenden des Studiengangs Social Sciences an der JLU zu erfassen. Insgesamt haben 42 Personen an der Umfrage teilgenommen. Die Ergebnisse sind in drei Blöcken dargestellt, wobei jeder Block 3-4 Fragen enthält. Sie können sich gerne durchklicken!
 
-Wissen über nachhaltiges wohnen (1,6 und 9)
-Umsetzung von n. W. (3,4,7,8) 
-Interesse (2, 5 und 11) 
-10 als eigene Gruppe vlt ?
+<!-- Wissen über nachhaltiges wohnen (1,6 und 9) -->
+<!-- Umsetzung von n. W. (3,4,7,8) -->
+<!-- Interesse (2, 5 und 11) -->
+<!-- 10 als eigene Gruppe vlt ? -->
 :::
 
 ::: {.card title="Inhaltsverzeichnis"}

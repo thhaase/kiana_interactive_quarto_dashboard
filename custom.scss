@@ -20,6 +20,10 @@ body {
   display: block;
 }
 
+.navbar-brand-container {
+  align-items: center;
+}
+
 .navbar-title-text {
   font-family: 'Poppins', sans-serif;
   color: $darkblue;
@@ -31,11 +35,11 @@ body {
   margin-bottom: 25px;
 
   // Desktop
-  font-size: 45px;
+  font-size: 30px;
 
   // Tablet
   @media only screen and (max-width: 768px) {
-    font-size: 35px;
+    font-size: 30px;
   }
 
   // Smartphone
